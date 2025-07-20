@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: manual-gpu-test
+  namespace: default
+  annotations:
+    gpu-scheduling-map: |
+      0=aks-workerpool-25338008-vmss000000:0,1
+      1=aks-workerpool-25338008-vmss000001:2
+      2=aks-workerpool-25338008-vmss000003:0,1,2
+      3=aks-workerpool-25338008-vmss000004:3
+      4=aks-workerpool-25338008-vmss000004:3
+  labels:
+    app: gpu-test
+    test-type: manual
+spec:
+  schedulerName: gpu-scheduler
+  restartPolicy: Never
+  containers:
+  - name: gpu-test
+    image: busybox:latest
+    command:
+    - /bin/sh
+    - -c
+    - |
+      echo "=== GPU Test Pod Started ==="
+      echo "Node Name: $NODE_NAME"
+      echo "Pod Name: $POD_NAME"
+      echo "Pod Namespace: $POD_NAMESPACE"
+      echo "CUDA_VISIBLE_DEVICES: $CUDA_VISIBLE_DEVICES"
+      echo "=== Environment Variables ==="
+      env | grep -E "(NODE|POD|CUDA)" | sort
+      echo "=== Waiting for 300 seconds ==="
+      sleep 300
+      echo "=== GPU Test Pod Completed ==="
+    env:
+    - name: NODE_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: spec.nodeName
+    - name: POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+    - name: POD_NAMESPACE
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.namespace
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "64Mi"
+      limits:
+        cpu: "200m"
+        memory: "128Mi"
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000 

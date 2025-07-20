@@ -1,0 +1,2 @@
+# Requirements for the GPU scheduler check service
+kubernetes>=28.1.0 

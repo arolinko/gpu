@@ -1,0 +1,20 @@
+apiVersion: v2
+name: gpu-scheduler
+description: A custom Kubernetes scheduler for GPU workload placement with CUDA device assignment
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+keywords:
+  - kubernetes
+  - scheduler
+  - gpu
+  - cuda
+  - nvidia
+home: https://github.com/your-org/gpu-scheduler
+sources:
+  - https://github.com/your-org/gpu-scheduler
+maintainers:
+  - name: DevOps Team
+    email: devops@yourcompany.com
+annotations:
+  category: Infrastructure 

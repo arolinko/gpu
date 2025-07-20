@@ -1,0 +1,20 @@
+apiVersion: v2
+name: gpu-scheduler-check
+description: Test service for GPU scheduler that logs node name and CUDA_VISIBLE_DEVICES
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+keywords:
+  - kubernetes
+  - gpu
+  - cuda
+  - test
+  - scheduler
+home: https://github.com/your-org/gpu-scheduler
+sources:
+  - https://github.com/your-org/gpu-scheduler
+maintainers:
+  - name: DevOps Team
+    email: devops@yourcompany.com
+annotations:
+  category: Testing 
